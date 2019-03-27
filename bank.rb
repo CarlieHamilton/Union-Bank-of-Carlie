@@ -12,6 +12,9 @@ password = "1234"
 $like_to_do = "What would you like to do? (type: 'balance', 'deposit', 'withdraw', 'history' or 'exit')"
 $transactions = []
 
+# open balance file to get the current balance
+b_file = File.read('balance.rb')  
+    $balance = b_file.to_i
 
 # The app begins...
 puts line * welcome.length
@@ -23,7 +26,7 @@ puts "Hi #{$name}! Please enter your password:"
 password_guess = IO::console.getpass
 while password_guess != password
     puts "Oops! Try again! Please type in your password"
-    password_guess = gets.chomp
+    password_guess = IO::console.getpass
 end
 
 puts " "
@@ -49,6 +52,9 @@ def banking_loop()
         puts "How much would you like to deposit?"
         deposit = gets.chomp.to_i
         $balance = $balance + deposit
+        save_balance = File.open('balance.rb', 'w')
+        save_balance.puts $balance
+        save_balance.close
         $transactions.push("deposit: $#{deposit}, balance: $#{$balance}")
         puts "Your balance is $#{$balance}"
         puts " "
