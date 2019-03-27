@@ -1,6 +1,9 @@
 # Banking App by Carlie Hamilton
 # https://github.com/BlueCodeThree/CA-ruby
 
+# dependency for the password
+require 'io/console'
+
 # here are some variables. The $ means they are "global" variables so I can use them in my methods
 $balance = 0
 line = "-"
@@ -17,7 +20,7 @@ puts line * welcome.length
 puts "Please enter your name:"
 $name = gets.chomp
 puts "Hi #{$name}! Please enter your password:"
-password_guess = gets.chomp
+password_guess = IO::console.getpass
 while password_guess != password
     puts "Oops! Try again! Please type in your password"
     password_guess = gets.chomp
@@ -46,7 +49,7 @@ def banking_loop()
         puts "How much would you like to deposit?"
         deposit = gets.chomp.to_i
         $balance = $balance + deposit
-        $transactions.push("deposit $#{deposit}, balance: $#{$balance}")
+        $transactions.push("deposit: $#{deposit}, balance: $#{$balance}")
         puts "Your balance is $#{$balance}"
         puts " "
         banking_stuff()
@@ -60,7 +63,7 @@ def banking_loop()
                 withdraw = gets.chomp.to_i
                 if withdraw <= $balance
                     $balance = $balance - withdraw
-                    $transactions.push("withdraw $#{withdraw}, balance: $#{$balance}")
+                    $transactions.push("withdraw: $#{withdraw}, balance: $#{$balance}")
                     puts "You withdrew #{withdraw}"
                     puts "Your balance is now #{$balance}"
                     puts " "
@@ -75,7 +78,6 @@ def banking_loop()
             banking_stuff()
         end
     when "h","history"
-        
         puts $transactions
         banking_stuff()
     when "exit"
