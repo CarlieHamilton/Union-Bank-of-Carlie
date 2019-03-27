@@ -1,3 +1,7 @@
+# Banking App by Carlie Hamilton
+# https://github.com/BlueCodeThree/CA-ruby
+
+# here are some variables. The $ means they are "global" variables so I can use them in my methods
 $balance = 0
 line = "-"
 welcome = "Welcome to the banking app"
@@ -6,7 +10,7 @@ $like_to_do = "What would you like to do? (type: 'balance', 'deposit', 'withdraw
 $transactions = []
 
 
-# The app begins
+# The app begins...
 puts line * welcome.length
 puts welcome
 puts line * welcome.length
@@ -21,7 +25,8 @@ end
 
 puts " "
 puts "Alright #{$name}," 
-# loops for the user input - balance, deposit, exit, or input something invalid
+
+# This method is for the initial user input for what they would like to do (display balance, deposit etc)
 def banking_stuff()
            
     puts $like_to_do
@@ -29,6 +34,7 @@ def banking_stuff()
     banking_loop()
 end
 
+# This is my loops for checking the balance, etc. Once something has been selected, it goes back to the start by calling a method again. 
 def banking_loop()
     system('clear')
     case $user_input
@@ -69,6 +75,7 @@ def banking_loop()
             banking_stuff()
         end
     when "h","history"
+        
         puts $transactions
         banking_stuff()
     when "exit"
