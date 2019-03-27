@@ -69,6 +69,9 @@ def banking_loop()
                 withdraw = gets.chomp.to_i
                 if withdraw <= $balance
                     $balance = $balance - withdraw
+                    save_balance = File.open('balance.rb', 'w')
+                    save_balance.puts $balance
+                    save_balance.close
                     $transactions.push("withdraw: $#{withdraw}, balance: $#{$balance}")
                     puts "You withdrew #{withdraw}"
                     puts "Your balance is now #{$balance}"
@@ -78,6 +81,9 @@ def banking_loop()
             end
         else
             $balance = $balance - withdraw
+            save_balance = File.open('balance.rb', 'w')
+            save_balance.puts $balance
+            save_balance.close
             $transactions.push("withdraw $#{withdraw}, balance: $#{$balance}")
             puts "You withdrew $#{withdraw}"
             puts "Your balance is now $#{$balance}"
