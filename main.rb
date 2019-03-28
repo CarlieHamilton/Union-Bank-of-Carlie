@@ -1,15 +1,13 @@
 # Banking App by Carlie Hamilton
-# https://github.com/BlueCodeThree/CA-ruby
-# todo - save transaction history
+# https://github.com/BlueCodeThree/Union-Bank-of-Carlie
 
 require 'io/console' # dependency for the password
 require 'yaml' # for saving my accounts hash
 
 # here are some variables. The $ means they are "global" variables so I can use them in my methods
 line = "-"
-welcome = "| --  Welcome to the banking app  -- |"
+welcome = "| --  Welcome to the Union Bank of Carlie  -- |"
 $like_to_do = "What would you like to do? (type: 'balance', 'deposit', 'withdraw', 'history' or 'exit')"
-$transactions = []  
 
 # load the accounts
 $accounts = YAML.load_file('accounts.yml')
@@ -97,7 +95,6 @@ def banking_loop()
     when "w","withdraw"
         puts "How much would you like to withdraw?"
         withdraw = gets.chomp.to_i
-        puts $accounts[$name][:balance]
         if withdraw > $accounts[$name][:balance]
             while true
                 puts "Ooops, you don't have that much. Please try again!"
@@ -105,23 +102,22 @@ def banking_loop()
                 withdraw = gets.chomp.to_i
                 if withdraw <= $accounts[$name][:balance]
                     $accounts[$name][:balance] = $accounts[$name][:balance] - withdraw
+                    $accounts[$name][:history] << "#{Time.now} - Withdraw: $#{withdraw}, Balance: $#{$accounts[$name][:balance]}"
                     File.write('accounts.yml', $accounts.to_yaml)
-                    $transactions.push("withdraw: $#{withdraw}, balance: $#{$accounts[$name][:balance]}")
-                    puts "You withdrew #{withdraw}"
                     puts "Your balance is now #{$accounts[$name][:balance]}"
                     banking_stuff()
                 end
             end
         else
             $accounts[$name][:balance] = $accounts[$name][:balance] - withdraw
+            $accounts[$name][:history] << "#{Time.now} - Withdraw: $#{withdraw}, Balance: $#{$accounts[$name][:balance]}"
             File.write('accounts.yml', $accounts.to_yaml)
-            $transactions.push("withdraw $#{withdraw}, balance: $#{$accounts[$name][:balance]}")
-            puts "You withdrew $#{withdraw}"
             puts "Your balance is now $#{$accounts[$name][:balance]}"
             banking_stuff()
         end
     when "h","history"
-        puts $transactions
+        puts "Transaction history for #{$name}:"
+        puts $accounts[$name][:history]
         banking_stuff()
     when "exit"
         abort("Bye #{$name}")
