@@ -1,14 +1,14 @@
 # Banking App by Carlie Hamilton
 # https://github.com/BlueCodeThree/CA-ruby
+# todo - save history
+#      - can only try pin three times, suspends account
 
 require 'io/console' # dependency for the password
-require 'yaml' # for saving my hash
+require 'yaml' # for saving my accounts hash
 
 # here are some variables. The $ means they are "global" variables so I can use them in my methods
-$balance = 0  # I should remove this when I have my multiple users working
 line = "-"
 welcome = "| --  Welcome to the banking app  -- |"
-password = "1234"  # I'll remove this too
 $like_to_do = "What would you like to do? (type: 'balance', 'deposit', 'withdraw', 'history' or 'exit')"
 $transactions = []
 
@@ -82,31 +82,28 @@ def banking_loop()
     when "w","withdraw"
         puts "How much would you like to withdraw?"
         withdraw = gets.chomp.to_i
-        if withdraw > $balance
+        puts $accounts[$name][:balance]
+        if withdraw > $accounts[$name][:balance]
             while true
                 puts "Ooops, you don't have that much. Please try again!"
                 puts "How much would you like to withdraw?"
                 withdraw = gets.chomp.to_i
-                if withdraw <= $balance
-                    $balance = $balance - withdraw
-                    save_balance = File.open('balance.rb', 'w')
-                    save_balance.puts $balance
-                    save_balance.close
-                    $transactions.push("withdraw: $#{withdraw}, balance: $#{$balance}")
+                if withdraw <= $accounts[$name][:balance]
+                    $accounts[$name][:balance] = $accounts[$name][:balance] - withdraw
+                    File.write('accounts.yml', $accounts.to_yaml)
+                    $transactions.push("withdraw: $#{withdraw}, balance: $#{$accounts[$name][:balance]}")
                     puts "You withdrew #{withdraw}"
-                    puts "Your balance is now #{$balance}"
+                    puts "Your balance is now #{$accounts[$name][:balance]}"
                     puts " "
                     banking_stuff()
                 end
             end
         else
-            $balance = $balance - withdraw
-            save_balance = File.open('balance.rb', 'w')
-            save_balance.puts $balance
-            save_balance.close
-            $transactions.push("withdraw $#{withdraw}, balance: $#{$balance}")
+            $accounts[$name][:balance] = $accounts[$name][:balance] - withdraw
+            File.write('accounts.yml', $accounts.to_yaml)
+            $transactions.push("withdraw $#{withdraw}, balance: $#{$accounts[$name][:balance]}")
             puts "You withdrew $#{withdraw}"
-            puts "Your balance is now $#{$balance}"
+            puts "Your balance is now $#{$accounts[$name][:balance]}"
             banking_stuff()
         end
     when "h","history"

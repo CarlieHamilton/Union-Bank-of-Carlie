@@ -7,7 +7,7 @@ bob:
   :balance: 1000
 shane:
   :pin: 1234
-  :balance: 1000000
+  :balance: 995000
 carlie:
   :pin: 4444
   :balance: 0
