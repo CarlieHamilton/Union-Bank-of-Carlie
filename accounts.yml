@@ -1,0 +1,7 @@
+---
+alice:
+  :pin: 312
+  :balance: -100
+bob:
+  :pin: 104
+  :balance: 1000

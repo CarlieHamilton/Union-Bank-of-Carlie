@@ -1,27 +1,23 @@
 # Banking App by Carlie Hamilton
 # https://github.com/BlueCodeThree/CA-ruby
 
-# dependency for the password
-require 'io/console'
+require 'io/console' # dependency for the password
+require 'yaml' # for saving my hash
 
 # here are some variables. The $ means they are "global" variables so I can use them in my methods
-$balance = 0
+$balance = 0  # I should remove this when I have my multiple users working
 line = "-"
 welcome = "| --  Welcome to the banking app  -- |"
-password = "1234"
+password = "1234"  # I'll remove this too
 $like_to_do = "What would you like to do? (type: 'balance', 'deposit', 'withdraw', 'history' or 'exit')"
 $transactions = []
 
-# accounts
-accounts = {
-    "alice" => { pin: 312, balance: -100 },
-    "bob"   => { pin: 104, balance: 1000 }
-  }
+# load the accounts
+accounts = YAML.load_file('accounts.yml')
 
-
-# open balance file to get the current balance
-b_file = File.read('balance.rb')  
-    $balance = b_file.to_i
+# open balance file to get all the accounts and their users
+# b_file = File.read('accounts.rb')  
+#     accounts = b_file
 
 # The app begins...
 puts line * welcome.length
