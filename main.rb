@@ -11,7 +11,7 @@ require 'yaml' # for saving my accounts hash
 line = "-"
 welcome = "| --  Welcome to the banking app  -- |"
 $like_to_do = "What would you like to do? (type: 'balance', 'deposit', 'withdraw', 'history' or 'exit')"
-$transactions = []
+$transactions = []  
 
 # load the accounts
 $accounts = YAML.load_file('accounts.yml')
