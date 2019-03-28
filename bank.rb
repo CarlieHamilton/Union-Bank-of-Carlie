@@ -13,7 +13,7 @@ $like_to_do = "What would you like to do? (type: 'balance', 'deposit', 'withdraw
 $transactions = []
 
 # load the accounts
-accounts = YAML.load_file('accounts.yml')
+$accounts = YAML.load_file('accounts.yml')
 
 # open balance file to get all the accounts and their users
 # b_file = File.read('accounts.rb')  
@@ -25,22 +25,30 @@ puts welcome
 puts line * welcome.length
 puts "Please enter your name:"
 $name = gets.chomp
-if accounts.has_key? $name
+if $accounts.has_key? $name
     puts "Hi #{$name}! Please enter your pin:"
     password_guess = IO::console.getpass
-    while password_guess.to_i != accounts[$name][:pin]
+    while password_guess.to_i != $accounts[$name][:pin]
         puts "Oops! Try again! Please type in your password"
         password_guess = IO::console.getpass
     end
 else 
-    accounts[$name] = {}
+    $accounts[$name] = {}
     puts "please create a pin:"
     password_save1 =  IO::console.getpass
     puts "please type your pin again:"
     password_save2 =  IO::console.getpass
-    if password_save1 == password_save2
-        accounts[$name] = {pin: password_save1, balance: 0}
+    while password_save1 != password_save2
+        system('clear')
+        puts "Oops! Your passwords did not match. Please try againg!"
+        puts "please create a pin:"
+        password_save1 =  IO::console.getpass
+        puts "please type your pin again:"
+        password_save2 =  IO::console.getpass
     end
+    $accounts[$name] = {pin: password_save1.to_i, balance: 0}
+    File.write('accounts.yml', $accounts.to_yaml)
+    
 end
 
 puts " "
@@ -59,18 +67,16 @@ def banking_loop()
     system('clear')
     case $user_input
     when "b","balance"
-        puts "Your balance is $#{$balance}"
+        puts "Your balance is $#{$accounts[$name][:balance]}" 
         puts " "
         banking_stuff()
     when "d","deposit"
         puts "How much would you like to deposit?"
         deposit = gets.chomp.to_i
-        $balance = $balance + deposit
-        save_balance = File.open('balance.rb', 'w')
-        save_balance.puts $balance
-        save_balance.close
+        $accounts[$name][:balance] = $accounts[$name][:balance] + deposit
+        File.write('accounts.yml', $accounts.to_yaml)
         $transactions.push("deposit: $#{deposit}, balance: $#{$balance}")
-        puts "Your balance is $#{$balance}"
+        puts "Your balance is $#{$accounts[$name][:balance]}"
         puts " "
         banking_stuff()
     when "w","withdraw"
