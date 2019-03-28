@@ -30,23 +30,20 @@ puts line * welcome.length
 puts "Please enter your name:"
 $name = gets.chomp
 if accounts.has_key? $name
-    puts "Hi #{$name}! Please enter your password:"
+    puts "Hi #{$name}! Please enter your pin:"
     password_guess = IO::console.getpass
-    while password_guess != password
+    while password_guess.to_i != accounts[$name][:pin]
         puts "Oops! Try again! Please type in your password"
         password_guess = IO::console.getpass
     end
 else 
     accounts[$name] = {}
-    puts accounts
     puts "please create a pin:"
     password_save1 =  IO::console.getpass
     puts "please type your pin again:"
     password_save2 =  IO::console.getpass
     if password_save1 == password_save2
-        accounts[$name] = {pin: password_save1}
-        puts accounts[$name]
-        puts accounts
+        accounts[$name] = {pin: password_save1, balance: 0}
     end
 end
 
