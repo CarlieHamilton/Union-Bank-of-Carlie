@@ -63,7 +63,7 @@ else
         puts "please type your pin again:"
         password_save2 =  IO::console.getpass
     end
-    $accounts[$name] = {pin: password_save1.to_i, balance: 0, suspended: false}
+    $accounts[$name] = {pin: password_save1.to_i, balance: 0, suspended: false, history: []}
     File.write('accounts.yml', $accounts.to_yaml)
     
 end
@@ -73,7 +73,7 @@ puts "Welcome #{$name}!"
 
 # This method is for the initial user input for what they would like to do (display balance, deposit etc)
 def banking_stuff()
-           
+    puts " "
     puts $like_to_do
     $user_input = gets.chomp
     banking_loop()
@@ -85,16 +85,14 @@ def banking_loop()
     case $user_input
     when "b","balance"
         puts "Your balance is $#{$accounts[$name][:balance]}" 
-        puts " "
         banking_stuff()
     when "d","deposit"
         puts "How much would you like to deposit?"
         deposit = gets.chomp.to_i
         $accounts[$name][:balance] = $accounts[$name][:balance] + deposit
+        $accounts[$name][:history] << "#{Time.now} - Deposit: $#{deposit}, Balance: $#{$accounts[$name][:balance]}"
         File.write('accounts.yml', $accounts.to_yaml)
-        $transactions.push("deposit: $#{deposit}, balance: $#{$balance}")
-        puts "Your balance is $#{$accounts[$name][:balance]}"
-        puts " "
+        puts "Your balance is now $#{$accounts[$name][:balance]}"
         banking_stuff()
     when "w","withdraw"
         puts "How much would you like to withdraw?"
@@ -111,7 +109,6 @@ def banking_loop()
                     $transactions.push("withdraw: $#{withdraw}, balance: $#{$accounts[$name][:balance]}")
                     puts "You withdrew #{withdraw}"
                     puts "Your balance is now #{$accounts[$name][:balance]}"
-                    puts " "
                     banking_stuff()
                 end
             end

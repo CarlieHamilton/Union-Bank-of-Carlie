@@ -1,25 +1,27 @@
 ---
 Alice:
   :pin: 312
-  :balance: 100
+  :balance: 130
   :suspended: false
+  :history:
+  - '2019-03-29 09:32:39 +1000 - Deposit: $30, Balance: $130'
 Bob:
   :pin: 104
   :balance: 1000
   :suspended: false
+  :history: []
 Carlie:
   :pin: 4444
-  :balance: 0
+  :balance: 140
   :suspended: false
+  :history:
+  - '2019-03-29 09:27:48 +1000 - Deposit: $50, Balance: $50'
+  - '2019-03-29 09:27:56 +1000 - Deposit: $50, Balance: $100'
+  - '2019-03-29 09:32:05 +1000 - Deposit: $40, Balance: $140'
 John:
-  :pin: 444
-  :balance: 0
-  :suspended: false
-Shane:
-  :pin: 333
-  :balance: 0
+  :pin: 321
+  :balance: 10
   :suspended: true
-Rob:
-  :pin: 567
-  :balance: 0
-  :suspended: true
+  :history:
+  - '2019-03-29 09:33:13 +1000 - Deposit: $40, Balance: $40'
+  - '2019-03-29 09:33:24 +1000 - Deposit: $0, Balance: $40'
