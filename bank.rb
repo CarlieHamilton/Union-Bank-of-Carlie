@@ -7,10 +7,17 @@ require 'io/console'
 # here are some variables. The $ means they are "global" variables so I can use them in my methods
 $balance = 0
 line = "-"
-welcome = "Welcome to the banking app"
+welcome = "| --  Welcome to the banking app  -- |"
 password = "1234"
 $like_to_do = "What would you like to do? (type: 'balance', 'deposit', 'withdraw', 'history' or 'exit')"
 $transactions = []
+
+# accounts
+accounts = {
+    "alice" => { pin: 312, balance: -100 },
+    "bob"   => { pin: 104, balance: 1000 }
+  }
+
 
 # open balance file to get the current balance
 b_file = File.read('balance.rb')  
@@ -22,15 +29,29 @@ puts welcome
 puts line * welcome.length
 puts "Please enter your name:"
 $name = gets.chomp
-puts "Hi #{$name}! Please enter your password:"
-password_guess = IO::console.getpass
-while password_guess != password
-    puts "Oops! Try again! Please type in your password"
+if accounts.has_key? $name
+    puts "Hi #{$name}! Please enter your password:"
     password_guess = IO::console.getpass
+    while password_guess != password
+        puts "Oops! Try again! Please type in your password"
+        password_guess = IO::console.getpass
+    end
+else 
+    accounts[$name] = {}
+    puts accounts
+    puts "please create a pin:"
+    password_save1 =  IO::console.getpass
+    puts "please type your pin again:"
+    password_save2 =  IO::console.getpass
+    if password_save1 == password_save2
+        accounts[$name] = {pin: password_save1}
+        puts accounts[$name]
+        puts accounts
+    end
 end
 
 puts " "
-puts "Alright #{$name}," 
+puts "Welcome #{$name}!" 
 
 # This method is for the initial user input for what they would like to do (display balance, deposit etc)
 def banking_stuff()
