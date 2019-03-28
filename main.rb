@@ -1,8 +1,6 @@
 # Banking App by Carlie Hamilton
 # https://github.com/BlueCodeThree/CA-ruby
 # todo - save transaction history
-#      - if account suspended, immidiately exit
-#      - work out why it deleted the data when suspending account
 
 require 'io/console' # dependency for the password
 require 'yaml' # for saving my accounts hash
@@ -25,24 +23,30 @@ puts line * welcome.length
 puts welcome
 puts line * welcome.length
 puts "Please enter your name:"
-$name = gets.chomp
+$name = gets.chomp.capitalize
 if $accounts.has_key? $name
-    puts "Hi #{$name}! Please enter your pin:"
-    guess_count = 0
-    password_guess = IO::console.getpass
-    while password_guess.to_i != $accounts[$name][:pin]
-        guess_count = guess_count + 1
-        if guess_count < 3
-            puts "Oops! Try again! Please type in your password"
-            password_guess = IO::console.getpass
-        else
-            system('clear')
-            puts "Your pin does not match"
-            $accounts[$name] = {suspended: true}
-            File.write('accounts.yml', $accounts.to_yaml)
-            puts "Your account has been suspended"
-            puts "Please contact your bank"
-            abort
+    if $accounts[$name][:suspended] == true
+        puts "Your account has been suspended"
+        puts "Please contact your bank"
+        abort
+    else
+        puts "Hi #{$name}! Please enter your pin:"
+        guess_count = 0
+        password_guess = IO::console.getpass
+        while password_guess.to_i != $accounts[$name][:pin]
+            guess_count = guess_count + 1
+            if guess_count < 3
+                puts "Oops! Try again! Please type in your password"
+                password_guess = IO::console.getpass
+            else
+                system('clear')
+                puts "Your pin does not match"
+                $accounts[$name][:suspended] = true
+                File.write('accounts.yml', $accounts.to_yaml)
+                puts "Your account has been suspended"
+                puts "Please contact your bank"
+                abort
+            end
         end
     end
 else 
@@ -53,13 +57,13 @@ else
     password_save2 =  IO::console.getpass
     while password_save1 != password_save2
         system('clear')
-        puts "Oops! Your passwords did not match. Please try againg!"
+        puts "Oops! Your passwords did not match. Please try again!"
         puts "please create a pin:"
         password_save1 =  IO::console.getpass
         puts "please type your pin again:"
         password_save2 =  IO::console.getpass
     end
-    $accounts[$name] = {pin: password_save1.to_i, balance: 0}
+    $accounts[$name] = {pin: password_save1.to_i, balance: 0, suspended: false}
     File.write('accounts.yml', $accounts.to_yaml)
     
 end

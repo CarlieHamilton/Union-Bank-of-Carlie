@@ -1,15 +1,25 @@
 ---
-alice:
+Alice:
   :pin: 312
   :balance: 100
-bob:
+  :suspended: false
+Bob:
   :pin: 104
   :balance: 1000
-shane:
-  :suspended: true
-carlie:
+  :suspended: false
+Carlie:
   :pin: 4444
   :balance: 0
+  :suspended: false
 John:
   :pin: 444
   :balance: 0
+  :suspended: false
+Shane:
+  :pin: 333
+  :balance: 0
+  :suspended: true
+Rob:
+  :pin: 567
+  :balance: 0
+  :suspended: true
