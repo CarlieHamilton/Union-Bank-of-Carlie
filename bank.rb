@@ -1,7 +1,8 @@
 # Banking App by Carlie Hamilton
 # https://github.com/BlueCodeThree/CA-ruby
-# todo - save history
-#      - can only try pin three times, suspends account
+# todo - save transaction history
+#      - if account suspended, immidiately exit
+#      - work out why it deleted the data when suspending account
 
 require 'io/console' # dependency for the password
 require 'yaml' # for saving my accounts hash
@@ -27,10 +28,22 @@ puts "Please enter your name:"
 $name = gets.chomp
 if $accounts.has_key? $name
     puts "Hi #{$name}! Please enter your pin:"
+    guess_count = 0
     password_guess = IO::console.getpass
     while password_guess.to_i != $accounts[$name][:pin]
-        puts "Oops! Try again! Please type in your password"
-        password_guess = IO::console.getpass
+        guess_count = guess_count + 1
+        if guess_count < 3
+            puts "Oops! Try again! Please type in your password"
+            password_guess = IO::console.getpass
+        else
+            system('clear')
+            puts "Your pin does not match"
+            $accounts[$name] = {suspended: true}
+            File.write('accounts.yml', $accounts.to_yaml)
+            puts "Your account has been suspended"
+            puts "Please contact your bank"
+            abort
+        end
     end
 else 
     $accounts[$name] = {}

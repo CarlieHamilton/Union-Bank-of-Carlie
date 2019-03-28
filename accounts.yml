@@ -6,8 +6,7 @@ bob:
   :pin: 104
   :balance: 1000
 shane:
-  :pin: 1234
-  :balance: 995000
+  :suspended: true
 carlie:
   :pin: 4444
   :balance: 0
