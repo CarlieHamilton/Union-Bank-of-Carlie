@@ -129,7 +129,8 @@ def banking_loop
             puts "Sorry, something happened. Please try again"
             puts $like_to_do
             $user_input = gets.chomp
-            if $user_input == "balance" or $user_input == "deposit" or $user_input == "exit" or user_input == "withdraw"
+            case $user_input
+            when "balance", 'b', "deposit", 'd', "exit", 'w', "withdraw", "history", "h"
                 banking_loop
             end
         end
