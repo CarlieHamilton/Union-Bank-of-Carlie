@@ -5,6 +5,7 @@
 # make it so that it uses two decimal points
 # error checking for input of monies
 # way for user to cancel and go back to menu
+# way to change pin
 
 require 'io/console' # dependency for the password
 require 'yaml' # for saving my accounts hash
