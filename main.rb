@@ -4,6 +4,7 @@
 # TODO
 # make it so that it uses two decimal points
 # error checking for input of monies
+# way for user to cancel and go back to menu
 
 require 'io/console' # dependency for the password
 require 'yaml' # for saving my accounts hash
@@ -71,20 +72,20 @@ puts " "
 puts "Welcome #{$name}!" 
 
 # This method is for the initial user input for what they would like to do (display balance, deposit etc)
-def banking_stuff()
+def banking_stuff
     puts " "
     puts $like_to_do
     $user_input = gets.chomp
-    banking_loop()
+    banking_loop
 end
 
 # This is my loops for checking the balance, etc. Once something has been selected, it goes back to the start by calling a method again. 
-def banking_loop()
+def banking_loop
     system('clear')
     case $user_input
     when "b","balance"
         puts "Your balance is $#{$accounts[$name][:balance]}" 
-        banking_stuff()
+        banking_stuff
     when "d","deposit"
         puts "How much would you like to deposit?"
         deposit = gets.chomp.to_i
@@ -92,8 +93,9 @@ def banking_loop()
         $accounts[$name][:history] << "#{Time.now} - Deposit: $#{deposit}, Balance: $#{$accounts[$name][:balance]}"
         File.write('accounts.yml', $accounts.to_yaml)
         puts "Your balance is now $#{$accounts[$name][:balance]}"
-        banking_stuff()
+        banking_stuff
     when "w","withdraw"
+        puts "Your balance is $#{$accounts[$name][:balance]}"
         puts "How much would you like to withdraw?"
         withdraw = gets.chomp.to_i
         if withdraw > $accounts[$name][:balance]
@@ -106,7 +108,7 @@ def banking_loop()
                     $accounts[$name][:history] << "#{Time.now} - Withdraw: $#{withdraw}, Balance: $#{$accounts[$name][:balance]}"
                     File.write('accounts.yml', $accounts.to_yaml)
                     puts "Your balance is now #{$accounts[$name][:balance]}"
-                    banking_stuff()
+                    banking_stuff
                 end
             end
         else
@@ -114,12 +116,12 @@ def banking_loop()
             $accounts[$name][:history] << "#{Time.now} - Withdraw: $#{withdraw}, Balance: $#{$accounts[$name][:balance]}"
             File.write('accounts.yml', $accounts.to_yaml)
             puts "Your balance is now $#{$accounts[$name][:balance]}"
-            banking_stuff()
+            banking_stuff
         end
     when "h","history"
         puts "Transaction history for #{$name}:"
         puts $accounts[$name][:history]
-        banking_stuff()
+        banking_stuff
     when "exit"
         abort("Goodbye #{$name}!")
     else
@@ -128,14 +130,15 @@ def banking_loop()
             puts $like_to_do
             $user_input = gets.chomp
             if $user_input == "balance" or $user_input == "deposit" or $user_input == "exit" or user_input == "withdraw"
-                banking_loop()
+                banking_loop
             end
         end
     end
 end
 
+## run the banking stuff loop!
 while true
-    banking_stuff()
+    banking_stuff
 end
 
 

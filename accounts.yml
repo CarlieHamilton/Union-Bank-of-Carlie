@@ -13,7 +13,7 @@ Bob:
   :history: []
 Carlie:
   :pin: 4444
-  :balance: 90
+  :balance: 100
   :suspended: false
   :history:
   - '2019-03-29 09:27:48 +1000 - Deposit: $50, Balance: $50'
@@ -22,6 +22,11 @@ Carlie:
   - '2019-03-29 09:43:31 +1000 - Withdraw: $20, Balance: $120'
   - '2019-03-29 09:43:43 +1000 - Withdraw: $20, Balance: $100'
   - '2019-03-29 09:45:11 +1000 - Withdraw: $10, Balance: $90'
+  - '2019-03-29 10:55:31 +1000 - Deposit: $30, Balance: $120'
+  - '2019-03-29 10:57:22 +1000 - Withdraw: $30, Balance: $90'
+  - '2019-03-29 10:58:02 +1000 - Withdraw: $20, Balance: $70'
+  - '2019-03-29 10:58:09 +1000 - Deposit: $60, Balance: $130'
+  - '2019-03-29 11:06:51 +1000 - Withdraw: $30, Balance: $100'
 John:
   :pin: 321
   :balance: 10
