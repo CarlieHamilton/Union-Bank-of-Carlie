@@ -29,3 +29,10 @@ John:
   :history:
   - '2019-03-29 09:33:13 +1000 - Deposit: $40, Balance: $40'
   - '2019-03-29 09:33:24 +1000 - Deposit: $0, Balance: $40'
+Sam:
+  :pin: 222
+  :balance: 400
+  :suspended: false
+  :history:
+  - '2019-03-29 10:24:14 +1000 - Account Opened, Balance: $0'
+  - '2019-03-29 10:24:24 +1000 - Deposit: $400, Balance: $400'

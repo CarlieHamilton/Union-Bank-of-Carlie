@@ -1,5 +1,9 @@
-# Banking App by Carlie Hamilton
+# Union Bank of Carlie - Banking App by Carlie Hamilton
 # https://github.com/BlueCodeThree/Union-Bank-of-Carlie
+
+# TODO
+# make it so that it uses two decimal points
+# error checking for input of monies
 
 require 'io/console' # dependency for the password
 require 'yaml' # for saving my accounts hash
@@ -12,11 +16,8 @@ $like_to_do = "What would you like to do? (type: 'balance', 'deposit', 'withdraw
 # load the accounts
 $accounts = YAML.load_file('accounts.yml')
 
-# open balance file to get all the accounts and their users
-# b_file = File.read('accounts.rb')  
-#     accounts = b_file
-
-# The app begins...
+# The app begins... 
+# Getting user and pin or creating a new account
 puts line * welcome.length
 puts welcome
 puts line * welcome.length
@@ -61,7 +62,7 @@ else
         puts "please type your pin again:"
         password_save2 =  IO::console.getpass
     end
-    $accounts[$name] = {pin: password_save1.to_i, balance: 0, suspended: false, history: []}
+    $accounts[$name] = {pin: password_save1.to_i, balance: 0, suspended: false, history: ["#{Time.now} - Account Opened, Balance: $0"]}
     File.write('accounts.yml', $accounts.to_yaml)
     
 end
@@ -120,7 +121,7 @@ def banking_loop()
         puts $accounts[$name][:history]
         banking_stuff()
     when "exit"
-        abort("Bye #{$name}")
+        abort("Goodbye #{$name}!")
     else
         while true
             puts "Sorry, something happened. Please try again"
