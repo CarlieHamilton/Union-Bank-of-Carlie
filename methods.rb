@@ -11,10 +11,9 @@ def create_pin
     password_save2 =  IO::console.getpass
 end
 
-# for withdrawing monies
-def withdraw_money(withdraw_local)
-    $accounts[$name][:balance] = $accounts[$name][:balance] - withdraw_local
-    $accounts[$name][:history] << "#{Time.now} - Withdraw: $#{withdraw_local}, Balance: $#{$accounts[$name][:balance]}"
+def withdraw_money(withdraw)
+    $accounts[$name][:balance] = $accounts[$name][:balance] - withdraw
+    $accounts[$name][:history] << "#{Time.now} - Withdraw: $#{withdraw}, Balance: $#{$accounts[$name][:balance]}"
     File.write('accounts.yml', $accounts.to_yaml)
     puts "Your balance is now $#{$accounts[$name][:balance]}"
 end
