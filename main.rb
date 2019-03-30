@@ -6,6 +6,7 @@
 # error checking for input of monies
 # way for user to cancel and go back to menu
 # way to change pin
+# history shows past 5 transactions, with an option to see the next five and previous five
 
 require 'io/console' # dependency for the password
 require 'yaml' # for saving my accounts hash
@@ -35,7 +36,7 @@ if $accounts.has_key? $name
         guess_count = 0
         password_guess = IO::console.getpass
         while password_guess.to_i != $accounts[$name][:pin]
-            guess_count = guess_count + 1
+            guess_count += 1
             if guess_count < 3
                 puts "Oops! Try again! Please type in your password"
                 password_guess = IO::console.getpass
@@ -80,6 +81,15 @@ def banking_stuff
     banking_loop
 end
 
+# for withdrawing monies
+def withdraw_money(withdraw_local)
+    $accounts[$name][:balance] = $accounts[$name][:balance] - withdraw_local
+    $accounts[$name][:history] << "#{Time.now} - Withdraw: $#{withdraw_local}, Balance: $#{$accounts[$name][:balance]}"
+    File.write('accounts.yml', $accounts.to_yaml)
+    puts "Your balance is now $#{$accounts[$name][:balance]}"
+    banking_stuff
+end
+
 # This is my loops for checking the balance, etc. Once something has been selected, it goes back to the start by calling a method again. 
 def banking_loop
     system('clear')
@@ -105,19 +115,11 @@ def banking_loop
                 puts "How much would you like to withdraw?"
                 withdraw = gets.chomp.to_i
                 if withdraw <= $accounts[$name][:balance]
-                    $accounts[$name][:balance] = $accounts[$name][:balance] - withdraw
-                    $accounts[$name][:history] << "#{Time.now} - Withdraw: $#{withdraw}, Balance: $#{$accounts[$name][:balance]}"
-                    File.write('accounts.yml', $accounts.to_yaml)
-                    puts "Your balance is now #{$accounts[$name][:balance]}"
-                    banking_stuff
+                    withdraw_money(withdraw)
                 end
             end
         else
-            $accounts[$name][:balance] = $accounts[$name][:balance] - withdraw
-            $accounts[$name][:history] << "#{Time.now} - Withdraw: $#{withdraw}, Balance: $#{$accounts[$name][:balance]}"
-            File.write('accounts.yml', $accounts.to_yaml)
-            puts "Your balance is now $#{$accounts[$name][:balance]}"
-            banking_stuff
+            withdraw_money(withdraw)
         end
     when "h","history"
         puts "Transaction history for #{$name}:"
