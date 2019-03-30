@@ -17,5 +17,4 @@ def withdraw_money(withdraw_local)
     $accounts[$name][:history] << "#{Time.now} - Withdraw: $#{withdraw_local}, Balance: $#{$accounts[$name][:balance]}"
     File.write('accounts.yml', $accounts.to_yaml)
     puts "Your balance is now $#{$accounts[$name][:balance]}"
-    banking_stuff
 end

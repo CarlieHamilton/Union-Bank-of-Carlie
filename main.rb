@@ -67,20 +67,14 @@ puts " "
 puts "Welcome #{$name}!" 
 
 # This method is for the initial user input for what they would like to do (display balance, deposit etc)
-def banking_stuff
+while true
     puts " "
     puts $like_to_do
     $user_input = gets.chomp
-    banking_loop
-end
-
-# This is my loops for checking the balance, etc. Once something has been selected, it goes back to the start by calling a method again. 
-def banking_loop
     system('clear')
     case $user_input
     when "b","balance"
         puts "Your balance is $#{$accounts[$name][:balance]}" 
-        banking_stuff
     when "d","deposit"
         puts "How much would you like to deposit?"
         deposit = gets.chomp.to_i
@@ -88,18 +82,19 @@ def banking_loop
         $accounts[$name][:history] << "#{Time.now} - Deposit: $#{deposit}, Balance: $#{$accounts[$name][:balance]}"
         File.write('accounts.yml', $accounts.to_yaml)
         puts "Your balance is now $#{$accounts[$name][:balance]}"
-        banking_stuff
     when "w","withdraw"
         puts "Your balance is $#{$accounts[$name][:balance]}"
         puts "How much would you like to withdraw?"
         withdraw = gets.chomp.to_i
         if withdraw > $accounts[$name][:balance]
-            while true
+            withdraw_error = true
+            while withdraw_error == true
                 puts "Ooops, you don't have that much. Please try again!"
                 puts "How much would you like to withdraw?"
                 withdraw = gets.chomp.to_i
                 if withdraw <= $accounts[$name][:balance]
                     withdraw_money(withdraw)
+                    withdraw_error = false
                 end
             end
         else
@@ -108,22 +103,9 @@ def banking_loop
     when "h","history"
         puts "Transaction history for #{$name}:"
         puts $accounts[$name][:history]
-        banking_stuff
     when "exit"
         abort("Goodbye #{$name}!")
     else
-        while true
-            puts "Sorry, something happened. Please try again"
-            banking_stuff
-        end
+        puts "Sorry, something happened. Please try again"
     end
 end
-
-## run the banking stuff loop!
-while true
-    banking_stuff
-end
-
-
-
-
