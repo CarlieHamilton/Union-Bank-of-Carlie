@@ -2,7 +2,7 @@
 Alice:
   :pin: 312
   :balance: 100
-  :suspended: false
+  :suspended: true
   :history:
   - '2019-03-29 09:32:39 +1000 - Deposit: $30, Balance: $130'
   - '2019-03-29 09:47:04 +1000 - Withdraw: $30, Balance: $100'
@@ -13,7 +13,7 @@ Bob:
   :history: []
 Carlie:
   :pin: 4444
-  :balance: 70
+  :balance: 1040
   :suspended: false
   :history:
   - '2019-03-29 09:27:48 +1000 - Deposit: $50, Balance: $50'
@@ -31,6 +31,9 @@ Carlie:
   - '2019-03-29 20:54:02 +1000 - Withdraw: $30, Balance: $110'
   - '2019-03-30 12:06:34 +1000 - Withdraw: $20, Balance: $90'
   - '2019-03-30 12:07:11 +1000 - Withdraw: $20, Balance: $70'
+  - '2019-03-30 23:24:48 +1000 - Withdraw: $30, Balance: $40'
+  - '2019-03-30 23:24:59 +1000 - Deposit: $1000, Balance: $1040'
+  - '2019-03-30 23:25:07 +1000 - Withdraw: $0, Balance: $1040'
 John:
   :pin: 321
   :balance: 10
@@ -45,3 +48,15 @@ Sam:
   :history:
   - '2019-03-29 10:24:14 +1000 - Account Opened, Balance: $0'
   - '2019-03-29 10:24:24 +1000 - Deposit: $400, Balance: $400'
+Shane:
+  :pin: 3333
+  :balance: 0
+  :suspended: false
+  :history:
+  - '2019-03-30 23:08:28 +1000 - Account Opened, Balance: $0'
+Sammy:
+  :pin: 111
+  :balance: 0
+  :suspended: false
+  :history:
+  - '2019-03-30 23:21:08 +1000 - Account Opened, Balance: $0'
