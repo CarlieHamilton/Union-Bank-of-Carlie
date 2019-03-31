@@ -11,9 +11,9 @@ def create_pin
     password_save2 =  IO::console.getpass
 end
 
-def withdraw_money(withdraw)
-    $accounts[$name][:balance] = $accounts[$name][:balance] - withdraw
-    $accounts[$name][:history] << "#{Time.now} - Withdraw: $#{withdraw}, Balance: $#{$accounts[$name][:balance]}"
-    $save_account
-    puts "Your balance is now $#{$accounts[$name][:balance]}"
+def withdraw_money(withdraw, accounts, name, save_account)
+    accounts[name][:balance] = accounts[name][:balance] - withdraw
+    accounts[name][:history] << "#{Time.now} - Withdraw: $#{withdraw}, Balance: $#{accounts[name][:balance]}"
+    save_account
+    puts "Your balance is now $#{accounts[name][:balance]}"
 end
