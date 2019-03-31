@@ -17,9 +17,8 @@ line = "-"
 welcome = "| --  Welcome to the Union Bank of Carlie  -- |"
 like_to_do = "What would you like to do? (type: 'balance', 'deposit', 'withdraw', 'history' or 'exit')"
 
-# load and save the accounts
+# load the accounts
 accounts = YAML.load_file('accounts.yml')
-save_account = File.write('accounts.yml', accounts.to_yaml)
 
 # The app begins... 
 puts line * welcome.length
@@ -81,7 +80,7 @@ while true
         deposit = gets.chomp.to_i
         accounts[name][:balance] = accounts[name][:balance] + deposit
         accounts[name][:history] << "#{Time.now} - Deposit: $#{deposit}, Balance: $#{accounts[name][:balance]}"
-        save_account
+        File.write('accounts.yml', accounts.to_yaml)
         puts "Your balance is now $#{accounts[name][:balance]}"
     when "w","withdraw"
         puts "Your balance is $#{accounts[name][:balance]}"
