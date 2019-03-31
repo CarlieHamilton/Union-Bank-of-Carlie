@@ -17,8 +17,9 @@ line = "-"
 welcome = "| --  Welcome to the Union Bank of Carlie  -- |"
 $like_to_do = "What would you like to do? (type: 'balance', 'deposit', 'withdraw', 'history' or 'exit')"
 
-# load the accounts
+# load and save the accounts
 $accounts = YAML.load_file('accounts.yml')
+$save_account = File.write('accounts.yml', $accounts.to_yaml)
 
 # The app begins... 
 puts line * welcome.length
@@ -44,7 +45,7 @@ if $accounts.has_key? $name
                 system('clear')
                 puts "Your pin does not match"
                 $accounts[$name][:suspended] = true
-                File.write('accounts.yml', $accounts.to_yaml)
+                $save_account
                 account_suspended
             end
         end
@@ -60,7 +61,7 @@ else
         create_pin
     end
     $accounts[$name] = {pin: password_save1.to_i, balance: 0, suspended: false, history: ["#{Time.now} - Account Opened, Balance: $0"]}
-    File.write('accounts.yml', $accounts.to_yaml)
+    $save_account
 end
 
 puts " "
@@ -80,7 +81,7 @@ while true
         deposit = gets.chomp.to_i
         $accounts[$name][:balance] = $accounts[$name][:balance] + deposit
         $accounts[$name][:history] << "#{Time.now} - Deposit: $#{deposit}, Balance: $#{$accounts[$name][:balance]}"
-        File.write('accounts.yml', $accounts.to_yaml)
+        $save_account
         puts "Your balance is now $#{$accounts[$name][:balance]}"
     when "w","withdraw"
         puts "Your balance is $#{$accounts[$name][:balance]}"
