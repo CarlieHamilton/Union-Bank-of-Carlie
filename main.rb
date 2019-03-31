@@ -44,7 +44,8 @@ if accounts.has_key? name
                 system('clear')
                 puts "Your pin does not match"
                 accounts[name][:suspended] = true
-                save_account
+                accounts[name][:history] << "#{Time.now} - Account Suspended"
+                File.write('accounts.yml', accounts.to_yaml)
                 account_suspended
             end
         end
@@ -60,7 +61,7 @@ else
         create_pin
     end
     accounts[name] = {pin: password_save1.to_i, balance: 0, suspended: false, history: ["#{Time.now} - Account Opened, Balance: $0"]}
-    save_account
+    File.write('accounts.yml', accounts.to_yaml)
 end
 
 puts " "
@@ -93,12 +94,12 @@ while true
                 puts "How much would you like to withdraw?"
                 withdraw = gets.chomp.to_i
                 if withdraw <= accounts[name][:balance]
-                    withdraw_money(withdraw, accounts, name, save_account)
+                    withdraw_money(withdraw, accounts, name)
                     withdraw_error = false
                 end
             end
         else
-            withdraw_money(withdraw, accounts, name, save_account)
+            withdraw_money(withdraw, accounts, name)
         end
     when "h","history"
         puts "Transaction history for #{name}:"
