@@ -34,10 +34,12 @@ Sam:
   - '2019-03-29 10:24:24 +1000 - Deposit: $400, Balance: $400'
 Shane:
   :pin: 3333
-  :balance: 0
+  :balance: 20
   :suspended: false
   :history:
   - '2019-03-30 23:08:28 +1000 - Account Opened, Balance: $0'
+  - '2019-03-31 20:13:31 +1000 - Deposit: $40, Balance: $40'
+  - '2019-03-31 20:14:40 +1000 - Withdraw: $20, Balance: $20'
 Sammy:
   :pin: 111
   :balance: 0
