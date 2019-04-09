@@ -10,7 +10,7 @@
 
 require 'io/console' # dependency for the password
 require 'yaml' # for saving my accounts hash
-require './methods.rb' # some external methods 
+require_relative 'methods' # some external methods 
 
 # here are some variables.
 line = "-"
@@ -41,7 +41,7 @@ if accounts.has_key? name
                 puts "Oops! Try again! Please type in your password"
                 password_guess = IO::console.getpass
             else
-                system('clear')
+                puts "\e[2J\e[f"
                 puts "Your pin does not match"
                 accounts[name][:suspended] = true
                 accounts[name][:history] << "#{Time.now} - Account Suspended"
@@ -56,7 +56,7 @@ else
     accounts[name] = {}
     create_pin
     while password_save1 != password_save2
-        system('clear')
+        puts "\e[2J\e[f"
         puts "Oops! Your passwords did not match. Please try again!"
         create_pin
     end
@@ -71,8 +71,8 @@ puts "Welcome #{name}!"
 while true
     puts " "
     puts like_to_do
-    user_input = gets.chomp
-    system('clear')
+    user_input = gets.chomp.downcase
+    puts "\e[2J\e[f"
     case user_input
     when "b","balance"
         puts "Your balance is $#{accounts[name][:balance]}" 
